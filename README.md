@@ -1,4 +1,6 @@
-# CA-Music
-# CA-Music
-# CA-Music
-# ca-music
+# CA-Music - Expressive Machinery Lab, Georgia Tech
+
+Collaborative development repository for table top CA Music prototype.
+
+- Contains Max 8 patches and JS (p5) 
+
