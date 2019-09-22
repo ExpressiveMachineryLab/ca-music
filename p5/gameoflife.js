@@ -3,56 +3,14 @@ let columns;
 let rows;
 let board;
 let next;
-
-function init_osc(){
-  print("init osc connect")
-    // connect to WebSocket server:
-  try {
-    oscWebSocket = new osc.WebSocketPort({
-      url: "ws://localhost:8000",
-      metadata: true
-    });
-  
-    oscWebSocket.on("ready", onSocketOpen);
-    oscWebSocket.on("message", onSocketMessage);
-    oscWebSocket.on("error", function(e){
-      print(e.message);
-    });
-  
-    oscWebSocket.open();
-  } catch(e) {
-    print(e);
-    statusMessage = e;
-  }
-}
-
-function p5_max(i,j) {
-  // send the OSC message to server. (osc.js will convert it to binary packet):
-  oscWebSocket.send({
-    address: "/p5js/sayhi",
-    args: [
-      {
-        type: "x",
-        value: i
-      }
-    ]
-  });
-}
-
-function onSocketOpen(e) {
-  print('server connected');
-  statusMessage = 'server connected';
-}
-
-function onSocketMessage(message) {
-  print(message);
-}
+var xebraState;
 
 function setup() {
   createCanvas( 500, 500);
   w = 20;
+  connectXebra();
   // Adjust frameRate to change speed of generation/tempo of music
-  frameRate(0.5 );
+  frameRate(0.2 );
 
   // Calculate columns and rows
   columns = floor(width / w);
@@ -69,26 +27,29 @@ function setup() {
   for (i = 0; i < columns; i++) {
     next[i] = new Array(rows);
   }
-  init_osc();
   init();
-
 }
 
 function draw() {
   background(255);
   generate();
+  
   for ( let i = 0; i < columns;i++) {
     for ( let j = 0; j < rows;j++) {
       if ((board[i][j] == 1)) {
         fill(46,230,237);
-        // p5_max(i,j);
       }
       else fill(0);
       stroke(239,250,107,120);
       rect(i * w, j * w, w-1, w-1);
+      sendToMax(board);
     }
   }
 
+}
+
+function sendToMax(val) {
+  
 }
 
 // reset board when mouse is pressed
@@ -111,10 +72,10 @@ function init() {
 
 // The process of creating the new generation
 function generate() {
-
   // Loop through every spot in our 2D array and check spots neighbors
   for (let x = 1; x < columns - 1; x++) {
     for (let y = 1; y < rows - 1; y++) {
+      let newborns = [];
       // Add up all the states in a 3x3 surrounding grid
       let neighbors = 0;
       for (let i = -1; i <= 1; i++) {
@@ -127,15 +88,30 @@ function generate() {
       // we added it in the above loop
       neighbors -= board[x][y];
       // Rules of Life
-      if      ((board[x][y] == 1) && (neighbors <  2)) next[x][y] = 0;           // Loneliness
-      else if ((board[x][y] == 1) && (neighbors >  3)) next[x][y] = 0;           // Overpopulation
-      else if ((board[x][y] == 0) && (neighbors == 3)) next[x][y] = 1;           // Reproduction
-      else                                             next[x][y] = board[x][y]; // Stasis
+      if      ((board[x][y] == 1) && (neighbors <  2)) next[x][y] = 0;            // Loneliness
+      else if ((board[x][y] == 1) && (neighbors >  3)) next[x][y] = 0;            // Overpopulation
+      else if ((board[x][y] == 0) && (neighbors == 3)) {                          // Reproduction 
+        next[x][y] = 1;
+        xebraState.sendMessageToChannel("fromp5_born", ['hi',x,y]);
+      } 
+      else next[x][y] = board[x][y];  // Stasis
+
     }
   }
-
   // Swap!
   let temp = board;
   board = next;
   next = temp;
+}
+
+function connectXebra() {
+  var options = {
+    hostname : "127.0.0.1", // localhost
+    port : 8086,
+    supported_objects : Xebra.SUPPORTED_OBJECTS
+  };
+
+  xebraState = new Xebra.State(options);
+
+  xebraState.connect();
 }
