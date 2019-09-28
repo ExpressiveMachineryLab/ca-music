@@ -85,12 +85,6 @@ function init() {
 function initblock() {
   console.log('block init');
   console.log(init_shape_x, init_shape_y)
-  // for (let i = 0; i < columns; i++) {
-  //   for (let j = 0; j < rows; j++) {
-  //     board[i][j] = 0;
-  //     next[i][j] = 0;
-  //   }
-  // }
   board[init_shape_x][init_shape_y] = 1;
   board[init_shape_x+1][init_shape_y+1] = 1;
   board[init_shape_x][init_shape_y+1] = 1;
@@ -256,15 +250,6 @@ function mousePressed() {
 }
 
 function keyPressed(){
-  if (keyCode === DOWN_ARROW){
-    paused=false;
-    initglider();
-  }
-  else if (keyCode === ENTER) {
-  
-  paused = true;
-  // init();
-  }
 
 }
 
