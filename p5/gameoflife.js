@@ -3,6 +3,7 @@ let columns;
 let rows;
 let board;
 let next;
+let notes;
 var xebraState;
 let init_shape_x, init_shape_y;
 
@@ -10,16 +11,15 @@ let init_shape_x, init_shape_y;
 function preload(){
   faces = loadImage('https://static.wixstatic.com/media/ca28c0_482d94bf038c4625bdfa5e21a7e40b86~mv2.png/v1/fill/w_26,h_26/happyface.png');
   sadfaces = loadImage("https://static.wixstatic.com/media/ca28c0_97ee922c85e141179b65d6dea6dea3bf~mv2.png/v1/fill/w_26,h_26/dead4.png");
-
 }
 
 function setup() {
   emptiness = 135;
   paused = false;
-
-  var canvas = createCanvas(500, 500);
+  pixelDensity(3);
+  var canvas = createCanvas(1100, 800);
   canvas.parent('grid');
-  w = 22;
+  w = 25;
   connectXebra();
   // Adjust frameRate to change speed of generation/tempo of music
   frameRate(2);
@@ -31,8 +31,10 @@ function setup() {
 
   // Wacky way to make a 2D array is JS
   board = new Array(columns);
+  notes = new Array(columns);
   for (let i = 0; i < columns; i++) {
     board[i] = new Array(rows);
+    notes[i] = new Array(rows);
   }
 
   // Going to use multiple 2D arrays and swap them
@@ -40,6 +42,7 @@ function setup() {
   for (i = 0; i < columns; i++) {
     next[i] = new Array(rows);
   }
+  init();
 }
 
 
@@ -53,6 +56,7 @@ function draw() {
       }
       else {
         image(sadfaces,(i * w), (j * w),w);
+
       //stroke(emptiness);
       //image(faces,(i * w)+w/2, (j * w)+w/2,w);
       //fill(0);
@@ -60,31 +64,33 @@ function draw() {
       }
    }
   }
-  if (!paused) {console.log(paused); generate();}
+  if (!paused) {generate();}
 }
 
-// Fill board randomly
+//init board with empty character and set of notes
 function init() {
   for (let i = 0; i < columns; i++) {
     for (let j = 0; j < rows; j++) {
-      // Lining the edges with 0s
-      if (i == 0 || j == 0 || i == columns-1 || j == rows-1) board[i][j] = 0;
-      // Filling the rest randomly
-      else board[i][j] = floor(random(2));
-      next[i][j] = 0;
+      board[i][j] = 0;
+      notes[i][j] = 0;
     }
   }
+  notes[3][4] = 2;
+  notes[5][4] = 3;
+  notes[8][7] = 4;
+  notes[10][3] = 5;
+  notes[8,8] = 6;
 }
 
 function initblock() {
   console.log('block init');
   console.log(init_shape_x, init_shape_y)
-  for (let i = 0; i < columns; i++) {
-    for (let j = 0; j < rows; j++) {
-      board[i][j] = 0;
-      next[i][j] = 0;
-    }
-  }
+  // for (let i = 0; i < columns; i++) {
+  //   for (let j = 0; j < rows; j++) {
+  //     board[i][j] = 0;
+  //     next[i][j] = 0;
+  //   }
+  // }
   board[init_shape_x][init_shape_y] = 1;
   board[init_shape_x+1][init_shape_y+1] = 1;
   board[init_shape_x][init_shape_y+1] = 1;
@@ -96,12 +102,12 @@ function initblock() {
 function initblinker() {
   console.log('blinker init');
   console.log(init_shape_x, init_shape_y)
-  for (let i = 0; i < columns; i++) {
-    for (let j = 0; j < rows; j++) {
-      board[i][j] = 0;
-      next[i][j] = 0;
-    }
-  }
+  // for (let i = 0; i < columns; i++) {
+  //   for (let j = 0; j < rows; j++) {
+  //     board[i][j] = 0;
+  //     next[i][j] = 0;
+  //   }
+  // }
   board[init_shape_x][init_shape_y] = 1;
   board[init_shape_x-1][init_shape_y] = 1;
   board[init_shape_x+1][init_shape_y] = 1;
@@ -111,12 +117,12 @@ function initblinker() {
 function inittoad() {
   console.log('toad init');
   console.log(init_shape_x, init_shape_y)
-  for (let i = 0; i < columns; i++) {
-    for (let j = 0; j < rows; j++) {
-      board[i][j] = 0;
-      next[i][j] = 0;
-    }
-  }
+  // for (let i = 0; i < columns; i++) {
+  //   for (let j = 0; j < rows; j++) {
+  //     board[i][j] = 0;
+  //     next[i][j] = 0;
+  //   }
+  // }
   board[init_shape_x][init_shape_y] = 1;
   board[init_shape_x+1][init_shape_y] = 1;
   board[init_shape_x+2][init_shape_y] = 1;
@@ -130,12 +136,12 @@ function inittoad() {
 function initbeacon() {
   console.log('beacon init');
   console.log(init_shape_x, init_shape_y)
-  for (let i = 0; i < columns; i++) {
-    for (let j = 0; j < rows; j++) {
-      board[i][j] = 0;
-      next[i][j] = 0;
-    }
-  }
+  // for (let i = 0; i < columns; i++) {
+  //   for (let j = 0; j < rows; j++) {
+  //     board[i][j] = 0;
+  //     next[i][j] = 0;
+  //   }
+  // }
   board[init_shape_x][init_shape_y] = 1;
   board[init_shape_x+1][init_shape_y+1] = 1;
   board[init_shape_x][init_shape_y+1] = 1;
@@ -152,12 +158,12 @@ function initbeacon() {
 function initglider() {
   console.log('glider init');
   console.log(init_shape_x, init_shape_y)
-  for (let i = 0; i < columns; i++) {
-    for (let j = 0; j < rows; j++) {
-      board[i][j] = 0;
-      next[i][j] = 0;
-    }
-  }
+  // for (let i = 0; i < columns; i++) {
+  //   for (let j = 0; j < rows; j++) {
+  //     board[i][j] = 0;
+  //     next[i][j] = 0;
+  //   }
+  // }
   board[init_shape_x-1][init_shape_y+1] = 1; 
   board[init_shape_x][init_shape_y+1] = 1;
   board[init_shape_x+1][init_shape_y+1] = 1;
@@ -255,7 +261,8 @@ function keyPressed(){
     initglider();
   }
   else if (keyCode === ENTER) {
-  paused = false;
+  
+  paused = true;
   // init();
   }
 
