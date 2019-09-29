@@ -5,6 +5,7 @@ let board;
 let next;
 var xebraState;
 let init_shape_x, init_shape_y;
+let paused= false;
 
 //var xebraState;
 function preload(){
@@ -17,10 +18,10 @@ function setup() {
   emptiness = 135;
   paused = false;
 
-  var canvas = createCanvas(500, 500);
+  var canvas = createCanvas(850, 575);
   canvas.parent('grid');
-  w = 22;
-  connectXebra();
+  w = 25;
+  //connectXebra();
   // Adjust frameRate to change speed of generation/tempo of music
   frameRate(2);
 
@@ -96,8 +97,8 @@ function initblock() {
 function initblinker() {
   console.log('blinker init');
   console.log(init_shape_x, init_shape_y)
-  for (let i = 0; i < columns; i++) {
-    for (let j = 0; j < rows; j++) {
+  for ( i = 0; i < columns; i++) {
+    for ( j = 0; j < rows; j++) {
       board[i][j] = 0;
       next[i][j] = 0;
     }
@@ -169,6 +170,12 @@ function initglider() {
 function initspaceship() {
   console.log('spaceship init');
   console.log(init_shape_x, init_shape_y);
+  for (let i = 0; i < columns; i++) {
+    for (let j = 0; j < rows; j++) {
+      board[i][j] = 0;
+      next[i][j] = 0;
+    }
+  }
 
   board[init_shape_x][init_shape_y-1] = 1; 
   board[init_shape_x+1][init_shape_y-1] = 1; 
@@ -215,7 +222,7 @@ function generate() {
       }        
       else if ((board[x][y] == 0) && (neighbors == 3)) {                          // Reproduction 
         next[x][y] = 1;
-        xebraState.sendMessageToChannel("fromp5_born", ['hi',x,y]);
+        //xebraState.sendMessageToChannel("fromp5_born", ['hi',x,y]);
       } 
       else next[x][y] = board[x][y];                                              // Stasis
 
@@ -229,7 +236,8 @@ function generate() {
 
 
 function mousePressed() {
-  paused=true;
+  if (paused == false) {paused=true;}
+  else (paused = false);
   let i = round((mouseX-(w/2))/w);
   let j = round((mouseY-(w/2))/w);
   
