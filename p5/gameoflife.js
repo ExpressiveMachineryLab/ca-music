@@ -15,6 +15,7 @@ let note_colors = {
   7:[255,89,0],
   8:[200,255,13]
 };
+let paused= false;
 
 //var xebraState;
 function preload(){
@@ -191,6 +192,12 @@ function initglider() {
 function initspaceship() {
   console.log('spaceship init');
   console.log(init_shape_x, init_shape_y);
+  // for (let i = 0; i < columns; i++) {
+  //   for (let j = 0; j < rows; j++) {
+  //     board[i][j] = 0;
+  //     next[i][j] = 0;
+  //   }
+  // }
 
   board[init_shape_x][init_shape_y-1] = 1; 
   board[init_shape_x+1][init_shape_y-1] = 1; 
@@ -249,16 +256,18 @@ function generate() {
 
 
 function mousePressed() {
-  paused=true;
+  if (paused == false) {paused=true;}
+  else (paused = false);
   let i = round((mouseX-(w/2))/w);
   let j = round((mouseY-(w/2))/w);
   
 
-  if (i > rows -4 || j > columns -3 || i < 3 || j <3) {
-    console.log('skipping corners');
+  if (i > columns -3 || j > rows -3 || i < 2 || j < 2) {
+    console.log('skipping corners',i,j,rows,columns);
    }
   else
-  {
+  { 
+    console.log(i,j);
     init_shape_x = i;
     init_shape_y = j;
   }
