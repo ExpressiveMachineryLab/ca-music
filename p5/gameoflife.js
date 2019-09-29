@@ -18,7 +18,7 @@ function setup() {
   emptiness = 135;
   paused = false;
 
-  var canvas = createCanvas(850, 575);
+  var canvas = createCanvas(825, 625);
   canvas.parent('grid');
   w = 25;
   //connectXebra();
@@ -45,7 +45,7 @@ function setup() {
 
 
 function draw() {
-  background(emptiness);
+  background(0,0,0,0);
   for ( let i = 0; i < columns;i++) {
     for ( let j = 0; j < rows;j++) {
       if ((board[i][j] == 1)) {

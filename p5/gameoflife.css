@@ -1,5 +1,5 @@
 html{
-    background: url(/Users/saramilkesespinosa/Desktop/GEORGIA_TECH/RESEARCH/ca_sandeep_repo/ca-music/p5/images/space.png) no-repeat center center fixed;
+    background: url(src/space.png) no-repeat center center fixed;
     -webkit-background-size: cover; /* For WebKit*/
     -moz-background-size: cover;    /* Mozilla*/
     -o-background-size: cover;      /* Opera*/
