@@ -6,6 +6,16 @@ let next;
 let notes;
 var xebraState;
 let init_shape_x, init_shape_y;
+let note_colors = {
+  2:[48,255,1],
+  3:[0,128,255],
+  4:[105,1,229],
+  5:[59,0,52],
+  6:[224,0,2],
+  7:[255,89,0],
+  8:[200,255,13]
+};
+let paused= false;
 
 //var xebraState;
 function preload(){
@@ -16,11 +26,12 @@ function preload(){
 function setup() {
   emptiness = 135;
   paused = false;
-  pixelDensity(3);
-  var canvas = createCanvas(1100, 800);
+
+  var canvas = createCanvas(900, 700);
+  pg = createGraphics(900, 700);
   canvas.parent('grid');
   w = 25;
-  connectXebra();
+  // connectXebra();
   // Adjust frameRate to change speed of generation/tempo of music
   frameRate(2);
 
@@ -47,20 +58,24 @@ function setup() {
 
 
 function draw() {
-  background(emptiness);
+  background(0,0,0,0);
   for ( let i = 0; i < columns;i++) {
     for ( let j = 0; j < rows;j++) {
-      if ((board[i][j] == 1)) {
+      if (board[i][j] == 1) {
         image(faces,(i * w), (j * w),w);
-        //fill(46,230,237);
+        // fill(46,230,237);
+        // ellipse((i * w), (j * w), w);
       }
       else {
         image(sadfaces,(i * w), (j * w),w);
-
-      //stroke(emptiness);
+        // stroke(emptiness);
+        // fill(0);
+        // ellipse((i * w), (j * w), w);
+        // ellipse((i * w)+w/2, (j * w)+w/2, w, w);
+      } 
       //image(faces,(i * w)+w/2, (j * w)+w/2,w);
-      //fill(0);
-      //ellipse((i * w)+w/2, (j * w)+w/2, w, w);
+      if (notes[i][j] !=0) {
+        image(pg,0,0);
       }
    }
   }
@@ -75,11 +90,19 @@ function init() {
       notes[i][j] = 0;
     }
   }
-  notes[3][4] = 2;
-  notes[5][4] = 3;
-  notes[8][7] = 4;
-  notes[10][3] = 5;
-  notes[8,8] = 6;
+  initnote(3,4,2);
+  initnote(15,10,3);
+  initnote(20,17,4);
+  initnote(10,3,5);
+  initnote(8,8,6);
+  initnote(8,19,6);
+  initnote(11,11,7);
+
+}
+function initnote(i,j,val){
+  notes[i][j] = val;
+  pg.fill(note_colors[notes[i][j]][0], note_colors[notes[i][j]][1], note_colors[notes[i][j]][2]);
+  pg.ellipse((i * w) +w/2, (j * w)+w/2, w);
 }
 
 function initblock() {
@@ -169,6 +192,12 @@ function initglider() {
 function initspaceship() {
   console.log('spaceship init');
   console.log(init_shape_x, init_shape_y);
+  // for (let i = 0; i < columns; i++) {
+  //   for (let j = 0; j < rows; j++) {
+  //     board[i][j] = 0;
+  //     next[i][j] = 0;
+  //   }
+  // }
 
   board[init_shape_x][init_shape_y-1] = 1; 
   board[init_shape_x+1][init_shape_y-1] = 1; 
@@ -191,7 +220,6 @@ function initspaceship() {
 
 // The process of creating the new generation
 function generate() {
-  console.log('Generating')
   // Loop through every spot in our 2D array and check spots neighbors
   for (let x = 1; x < columns -1; x++) {
     for (let y = 1; y < rows -1; y++) {
@@ -207,7 +235,7 @@ function generate() {
       // we added it in the above loop
       neighbors -= board[x][y];
       // Rules of Life
-      if ((board[x][y] == 1) && (neighbors <  2)) {                           // Loneliness
+      if ((board[x][y] == 1) && (neighbors <  2)) {                               // Loneliness
         next[x][y] = 0; 
       }            
       else if ((board[x][y] == 1) && (neighbors >  3)) {                          // Overpopulation
@@ -215,10 +243,9 @@ function generate() {
       }        
       else if ((board[x][y] == 0) && (neighbors == 3)) {                          // Reproduction 
         next[x][y] = 1;
-        xebraState.sendMessageToChannel("fromp5_born", ['hi',x,y]);
+        // xebraState.sendMessageToChannel("fromp5_born", ['hi',x,y]);
       } 
       else next[x][y] = board[x][y];                                              // Stasis
-
     }
   }
   // Swap!
@@ -229,16 +256,18 @@ function generate() {
 
 
 function mousePressed() {
-  paused=true;
+  if (paused == false) {paused=true;}
+  else (paused = false);
   let i = round((mouseX-(w/2))/w);
   let j = round((mouseY-(w/2))/w);
   
 
-  if ( i > rows -4 || j > columns -3 || i < 3 || j <3) {
-    console.log('skipping corner shapes',i,j);
-  }
+  if (i > columns -3 || j > rows -3 || i < 2 || j < 2) {
+    console.log('skipping corners',i,j,rows,columns);
+   }
   else
-  {
+  { 
+    console.log(i,j);
     init_shape_x = i;
     init_shape_y = j;
   }
