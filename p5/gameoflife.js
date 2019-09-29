@@ -58,7 +58,7 @@ function setup() {
 
 
 function draw() {
-  background(emptiness);
+  background(0,0,0,0);
   for ( let i = 0; i < columns;i++) {
     for ( let j = 0; j < rows;j++) {
       if (board[i][j] == 1) {
