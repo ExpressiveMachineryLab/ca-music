@@ -19,8 +19,8 @@ html{
     padding-inline-end: 10px;
   }
 p{
-font-family: 'Press Start 2P', cursive;
-color: white;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
   }
 #conditionals{
     height:200px;

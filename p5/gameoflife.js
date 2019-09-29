@@ -10,7 +10,7 @@ let paused= false;
 //var xebraState;
 function preload(){
   faces = loadImage('https://static.wixstatic.com/media/ca28c0_482d94bf038c4625bdfa5e21a7e40b86~mv2.png/v1/fill/w_26,h_26/happyface.png');
-  sadfaces = loadImage("https://static.wixstatic.com/media/ca28c0_97ee922c85e141179b65d6dea6dea3bf~mv2.png/v1/fill/w_26,h_26/dead4.png");
+  sadfaces = loadImage("https://static.wixstatic.com/media/ca28c0_1aea7528d3814577ab593091f9ce7b8d~mv2.png/v1/fill/w_26,h_26/faceoff.png");
 
 }
 
