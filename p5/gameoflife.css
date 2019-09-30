@@ -1,5 +1,5 @@
 html{
-    background: url(src/space.png) no-repeat center center fixed;
+    background: url(src/space_.png) no-repeat center center fixed;
     -webkit-background-size: cover; /* For WebKit*/
     -moz-background-size: cover;    /* Mozilla*/
     -o-background-size: cover;      /* Opera*/
@@ -19,12 +19,26 @@ html{
     padding-inline-end: 10px;
   }
 p{
+    padding-top: 9px;
+    padding-left:3px;
     font-family: 'Press Start 2P', cursive;
     color: white;
   }
+#shapeselect {
+    background: url(src/border.png) no-repeat;
+    padding-left: 18px;
+    height:212px;
+}
 #conditionals{
-    height:200px;
+    background: url(src/borderconditionals.png) no-repeat;
+    padding-left: 18px;
+    height:212px;
 }
 #music{
     height:150px;
+}
+#grid{
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 15px;
 }
