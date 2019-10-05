@@ -1,6 +1,7 @@
 let w;
 let columns;
 let rows;
+// board for shapes, notes for colored notes, comp for centroids of shapes
 let board;
 let next;
 let notes;
@@ -17,6 +18,7 @@ let note_colors = {
   8:[200,255,13]
 };
 let paused= true;
+let time =0;
 
 //var xebraState;
 function preload(){
@@ -25,15 +27,15 @@ function preload(){
 }
 
 function setup() {
+  time = millis();
   emptiness = 135;
   paused = true;
 
   var canvas = createCanvas(900, 700);
-  pg = createGraphics(900, 700);
   canvas.parent('grid');
   w = 25;
-  // connectXebra();
-  // Adjust frameRate to change speed of generation/tempo of music
+  connectXebra();
+  // Adjust frameRate to change speed of generation/tempo of music, step through generations instead
   frameRate(2);
 
   // Calculate columns and rows
@@ -58,25 +60,37 @@ function setup() {
 
 
 function draw() {
+  time = time+1;
   background(0,0,0,0);
   for ( let i = 0; i < columns;i++) {
     for ( let j = 0; j < rows;j++) {
-      if (board[i][j] == 1) {
+      if (notes[i][j] !=0) {
+        fill(note_colors[notes[i][j]][0], note_colors[notes[i][j]][1], note_colors[notes[i][j]][2]);
+        ellipse((i * w) +w/2, (j * w)+w/2, w);
+      }
+      else if (comp[i][j] == 1) {
+        console.log(time % 4);
+        if (time % 8 < 1){
+          fill(255,255,255);
+          rect((i * w) , (j * w), w-1,w-1); 
+          xebraState.sendMessageToChannel("beep_location", ['beep',i,j]);
+        } 
+        else {
+          fill(0); // fill black
+          rect((i * w) , (j * w), w-1,w-1); // draw second circle
+        }
+      }
+
+      else if (board[i][j] == 1) {
         image(faces,(i * w), (j * w),w);
         // fill(46,230,237);
         // ellipse((i * w), (j * w), w);
       }
       else {
-        image(sadfaces,(i * w), (j * w),w);
-        // stroke(emptiness);
-        // fill(0);
-        // ellipse((i * w), (j * w), w);
-        // ellipse((i * w)+w/2, (j * w)+w/2, w, w);
+      image(sadfaces,(i * w), (j * w),w);
       } 
+
       //image(faces,(i * w)+w/2, (j * w)+w/2,w);
-      if (notes[i][j] !=0) {
-        image(pg,0,0);
-      }
    }
   }
   if (!paused) {
@@ -95,20 +109,20 @@ function init() {
       comp[i][j] = 0;
     }
   }
-  initnote(3,4,2);
-  initnote(15,10,3);
-  initnote(20,17,4);
-  initnote(10,3,5);
-  initnote(8,8,6);
-  initnote(8,19,6);
-  initnote(11,11,7);
+  notes[3][4]=2;
+  notes[15][10]=3;
+  notes[20][17]=4;
+  notes[10][3]=5;
+  notes[8][8]=6;
+  notes[8][19]=6;
+  notes[11][11]=7;
+  notes[23][20]=4;
+  notes[16][25]=3;
+  notes[22][29]=4;
+
+  // xebraState.sendMessageToChannel("notes", [3,4,2]);
 }
 
-function initnote(i,j,val){
-  notes[i][j] = val;
-  pg.fill(note_colors[notes[i][j]][0], note_colors[notes[i][j]][1], note_colors[notes[i][j]][2]);
-  pg.ellipse((i * w) +w/2, (j * w)+w/2, w);
-}
 
 function initblock() {
   console.log('block init');
@@ -196,7 +210,7 @@ function initspaceship() {
 function generate() {
   for (let x = 1; x < columns -1; x++) {
     for (let y = 1; y < rows -1; y++) {
-      
+      comp[x][y] =0;
       //find_neighbors
       let neighbors = 0;
       for (let i = -1; i <= 1; i++) {
@@ -214,7 +228,6 @@ function generate() {
       }        
       else if ((board[x][y] == 0) && (neighbors == 3)) {                          // Reproduction 
         next[x][y] = 1;
-        // xebraState.sendMessageToChannel("fromp5_born", ['hi',x,y]);
       } 
       else next[x][y] = board[x][y];                                              // Stasis
     }
@@ -263,11 +276,21 @@ function find_components(offset) {
     })
   })
 
-  for k in result_object {
-    console.log()
-
+  for (var key in result_object) {
+    let component = result_object[key]
+    let avg_x =0;
+    let avg_y = 0;
+    console.log(result_object[key]);
+    for (let i = 0; i < component.length; i++) {
+      avg_x += component[i][0];
+      avg_y += component[i][1];
+    }
+    
+    avg_x = Math.round(avg_x / component.length);
+    avg_y = Math.round(avg_y / component.length);
+    // console.log(avg_x,avg_y);
+    comp[avg_y][avg_x] = 1;
   }
-  // return result_object;
 }
 
 function mousePressed() {
