@@ -123,6 +123,11 @@ function init() {
   // xebraState.sendMessageToChannel("notes", [3,4,2]);
 }
 
+function initclear() {
+  console.log('clear init');
+  setup();
+}
+
 
 function initblock() {
   console.log('block init');
