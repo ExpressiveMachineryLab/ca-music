@@ -32,7 +32,7 @@ function setup() {
   send_message = true;
   // osc = new OscP5(this, 12000);
   // sonic_pi = new NetAddress("127.0.0.1", 4559);
-  canvas = createCanvas( 500, 650);
+  canvas = createCanvas(500,650);
   canvas.parent('grid');
   // size(500, 500);
   w = 31;
@@ -156,12 +156,14 @@ function init(random=false) {
       //    board[i][j] = 0;
       //  }
       // Filling the rest randomly
+
       
       if (random == true) {
         board[i][j] = floor(random(2));
       }
-
-      next[i][j] = 0;
+      else {
+        board[i][j] = 0;
+      }
     }
   }
 }
@@ -262,7 +264,7 @@ function generate() {
       else if ((board[x][y] == 0) && (neighbors == 3)) {                          // Reproduction 
         next[x][y] = 1;
       } 
-      else next[x][y] = board[x][y];  // Stasis
+      else next[x][y] = board[x][y];                                              // Stasis
     }
   }
   // Swap!
