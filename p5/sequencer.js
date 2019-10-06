@@ -1,6 +1,7 @@
 // import oscP5.*;
 // import netP5.*;
 let canvas;
+let waveform = new Tone.Waveform(256);
 let w;
 let columns;
 let rows;
@@ -15,6 +16,9 @@ let save_send_num;
 let nSteps;
 let init_shape_x, init_shape_y;
 let play_dir=0;
+let notes={0:'C3',1:'C#3',2:'D3',3:'D#3',4:'E3',5:'F3',6:'F#3',7:'G3',8:'G#3',9:'A3',10:'A#3'
+,11:'B3',12:'C4',13:'C#4',14:'D4',15:'D#4',16:'E4',17:'F4',18:'F#4',19:'G4'}
+
 //var faces;
 //var shapes;
 
@@ -31,6 +35,19 @@ function setup() {
   emptiness = 155;
   paused = false;
   send_message = true;
+
+  t0 = new Tone.PolySynth(6, Tone.FMSynth,{
+    oscillator: {
+      type: 'sine'
+    }
+  }).toMaster();
+  // t0.chain(waveform, Tone.Master);
+
+  // t0.envelope.attack = 0.2;
+  // t0.envelope.decay = 0.1;
+  // t0.envelope.sustain = 0.1;
+  // t0.envelope.release = 0.1;
+
   // osc = new OscP5(this, 12000);
   // sonic_pi = new NetAddress("127.0.0.1", 4559);
   canvas = createCanvas(500,650);
@@ -39,7 +56,7 @@ function setup() {
   w = 31;
  // connectXebra();
   // Adjust frameRate to change speed of generation/tempo of music
-  frameRate(1.5);
+  frameRate(2);
   // Calculate columns and rows
   columns = floor(width / w);
   rows = floor(height / w);
@@ -76,6 +93,8 @@ function draw() {
         num_ones += 1;
         fill(255,0,0);
         ellipse((step * w)+w/2, (j * w)+w/2, w, w);
+        console.log(j);
+        t0.triggerAttackRelease(notes[j], '4n');
       }
       else {
         // let highlight = (step)% nSteps;
@@ -130,6 +149,8 @@ function draw() {
         num_ones += 1;
         fill(255,0,0);
         ellipse((step * w)+w/2, (j * w)+w/2, w, w);
+        console.log(j);
+        t0.triggerAttackRelease(notes[j], '4n');
       }
       else {
         let highlight_color = color(169, 169, 169);
@@ -236,7 +257,7 @@ function draw_board(board) {
 
 
 // Fill board randomly
-function init(rand) {
+function init(key) {
   for (let i = 0; i < columns; i++) {
     for (let j = 0; j < rows; j++) {
       // Padding adds complexity, Lining the edges with 0s
@@ -244,10 +265,10 @@ function init(rand) {
       //    board[i][j] = 0;
       //  }
       // Filling the rest randomly   
-      if (rand === "true") {
+      if (key === "random") {
         board[i][j] = floor(random(2));
       }
-      else {
+      else if(key === "clear"){
         board[i][j] = 0;
       }
     }
