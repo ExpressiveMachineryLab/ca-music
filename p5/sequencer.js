@@ -188,8 +188,33 @@ function draw() {
   } 
 }
 
-  function play_direction(dir) {
+function play_direction(dir) {
   play_dir = dir;
+}
+
+function rotation(dir) {
+  console.log(dir);
+  let temp = board;
+  let radians = (Math.PI / 180) * 90, cos = Math.cos(radians), sin = Math.sin(radians);
+  let nx, ny;
+  if (dir == "clockwise"){
+    for ( let i = 0; i < columns; i++) {
+      for ( let j = 0; j < rows; j++) {
+        nx = (cos * (i - 8)) + (sin * (j - 10)) + 8;
+        ny = (cos * (j - 10)) - (sin * (i - 8)) + 10;
+        temp[nx][ny] = board[i][j];
+      }
+    }
+    console.log('clockwise');
+  }
+  else if (dir == "anticlockwise"){
+    for ( let i = 0; i < columns; i++) {
+      for ( let j = 0; j < rows; j++) {
+      
+      }
+    }
+  }
+  board = temp;
 }
 
 function draw_board(board) {
@@ -328,7 +353,7 @@ function generate() {
       else next[x][y] = board[x][y];                                              // Stasis
     }
   }
-  // Swap!
+  // Swap! do we really need to store next here?
   temp = board;
   board = next;
   next = temp;
