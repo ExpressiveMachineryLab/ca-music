@@ -9,11 +9,12 @@ let next;
 let paused;
 let emptiness;
 let send_message;
-let step = 0;
+let step=0;
 let board_sent = false;
 let save_send_num;
 let nSteps;
 let init_shape_x, init_shape_y;
+let play_dir=0;
 //var faces;
 //var shapes;
 
@@ -46,6 +47,7 @@ function setup() {
   cellWidth = width / columns;
   cellHeight = height/rows;
   nSteps = columns;
+
   board = new Array(columns);
   next = new Array(columns); 
   for (let i = 0; i < columns; i++) {
@@ -58,8 +60,17 @@ function setup() {
 }
 
 function draw() {
-  if (send_message) {
-    let num_ones = 0;
+
+  let num_ones = 0;
+  if (play_dir == 'forward'){
+   
+   forward();
+  }
+  else if (play_dir == 'backward'){
+    backward();
+  }
+
+  function forward() {
     for (let j = 0; j < rows; j++) {
       if (board[step][j] == 1) {
         num_ones += 1;
@@ -67,28 +78,74 @@ function draw() {
         ellipse((step * w)+w/2, (j * w)+w/2, w, w);
       }
       else {
-        let highlight = (step)% nSteps;
+        // let highlight = (step)% nSteps;
         let highlight_color = color(169, 169, 169);
-        highlight_color.setAlpha(4);
+        highlight_color.setAlpha(8);
         fill(highlight_color);
         noStroke();
-        rect(highlight*w, 0, w, height)
+        rect((step % nSteps)*w, 0, w, height)
         // ellipse((step * w)+w/2, (j * w)+w/2, w, w);
       }
     }
-    let send_num = new Array(num_ones);
-    let counter = 0;
-    for (let j = 0; j < rows; j++) {
-      if (board[step][j] == 1) {
-        send_num[counter] = j;
-        counter += 1;
-      }
-    }
+    
     if (step > 0) {
       // OscMessage msg1 = new OscMessage("/trigger/notes");
       // msg1.add(save_send_num);
       // osc.send(msg1, sonic_pi);
       for (let j = 0; j < rows; j++) {
+        if (board[step][j] == 1) {
+          fill(127, 255, 0);
+          ellipse(((step) * w)+w/2, (j * w)+w/2, w, w);
+        }
+        // else {
+        //   var highlight = (step - 1 )% nSteps;
+        //   fill(200, 60);
+        //   noStroke();
+        //   rect(highlight*27, 0,27, height)
+        //   ellipse((step * w)+w/2, (j * w)+w/2, w, w);
+        // }
+      }
+    }
+
+  let send_num = new Array(num_ones);
+  let counter = 0;
+  for (let j = 0; j < rows; j++) {
+    if (board[step][j] == 1) {
+      send_num[counter] = j;
+      counter += 1;
+    }
+  } 
+  save_send_num = send_num;
+  // setTimeout(draw,00);
+  step += 1;
+  if (step == columns ) {
+    step = 0;
+    board_sent = true;
+    }
+  }
+  
+  function backward() {
+    for (let j = rows-1; j>=0 ; j--) {
+      if (board[step][j] == 1) {
+        num_ones += 1;
+        fill(255,0,0);
+        ellipse((step * w)+w/2, (j * w)+w/2, w, w);
+      }
+      else {
+        let highlight_color = color(169, 169, 169);
+        highlight_color.setAlpha(8);
+        fill(highlight_color);
+        noStroke();
+        rect((step % nSteps)*w, 0, w, height)
+        // ellipse((step * w)+w/2, (j * w)+w/2, w, w);
+      }
+    }
+    
+    if (step > 0) {
+      // OscMessage msg1 = new OscMessage("/trigger/notes");
+      // msg1.add(save_send_num);
+      // osc.send(msg1, sonic_pi);
+      for (let j = columns-1; j >=0; j--) {
         if (board[step-1][j] == 1) {
           fill(127, 255, 0);
           ellipse(((step-1) * w)+w/2, (j * w)+w/2, w, w);
@@ -98,36 +155,42 @@ function draw() {
         //   fill(200, 60);
         //   noStroke();
         //   rect(highlight*27, 0,27, height)
-        //   // ellipse((step * w)+w/2, (j * w)+w/2, w, w);
+        //   ellipse((step * w)+w/2, (j * w)+w/2, w, w);
         // }
       }
     }
+    let send_num = new Array(num_ones);
+    let counter = 0;
+    for (let j = 0; j < rows; j++) {
+      if (board[step][j] == 1) {
+        send_num[counter] = j;
+        counter += 1;
+      }
+    } 
     save_send_num = send_num;
-
     // setTimeout(draw,00);
-    step += 1;
-    if (step == columns) {
-      step = 0;
+    step = step - 1;
+    if (step < 0) {
+      step = columns-1;
       board_sent = true;
     }
   }
-  
-  console.log(paused,board_sent);
+
   if (paused===false && board_sent==true) {
     console.log('Generating!')
     generate();
-    console.log('Board', board);
-    console.log('Next', next);
-   }
-   
+  }
+  
   if (board_sent) { 
     board_sent = false;
     background(emptiness);
     draw_board(board);
-  }
+  } 
 }
 
-
+  function play_direction(dir) {
+  play_dir = dir;
+}
 
 function draw_board(board) {
   for ( let i = 0; i < columns; i++) {
@@ -148,17 +211,15 @@ function draw_board(board) {
 
 
 // Fill board randomly
-function init(random=false) {
+function init(rand) {
   for (let i = 0; i < columns; i++) {
     for (let j = 0; j < rows; j++) {
       // Padding adds complexity, Lining the edges with 0s
       // if (i == 0 || j == 0 || i == columns-1 || j == rows-1){
       //    board[i][j] = 0;
       //  }
-      // Filling the rest randomly
-
-      
-      if (random == true) {
+      // Filling the rest randomly   
+      if (rand === "true") {
         board[i][j] = floor(random(2));
       }
       else {
