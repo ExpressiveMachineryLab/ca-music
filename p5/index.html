@@ -1,9 +1,11 @@
 <html>
     <head>
+        <script src="libs/tone.min.js"></script>
         <script src="libs/p5.min.js"></script>
         <script src="libs/p5.dom.min.js"></script>
         <script src="libs/xebra.js"></script>
         <script src="sequencer.js" type="text/javascript"></script>
+        
         <style> body {padding: 0; margin: 0;} canvas {vertical-align: top;} </style>
         <link rel="stylesheet" href="gameoflife.css"></style>
         <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -16,7 +18,7 @@
             <div id='grid' class='child flex-child'></div> 
             <div id='controlpanel' class='child flex-child'>
                 <div id='shapeselect'><p> PICK A SHAPE!</p>
-                <button id="block" onclick="initblock()"> <img src="src/block.png" alt="this block does not move"  width=80/> </button>
+                <button id="block" onclick="initblock()"> <img src="src/block.gif" alt="this block does not move"  width=80/> </button>
                 <button id="blinker" onclick="initblinker()"> <img src="src/blinker.gif" alt="this blinker just oscillates"  width=80/> </button>
                 <button id ="toad" onclick="inittoad()" > <img src="src/toad.gif" alt="this toad oscillates"  width=80/> </button><br>
                 <button id="beacon" onclick="initbeacon()"> <img src="src/beacon.gif" alt="this beacon oscillates"  width=80/> </button>
@@ -25,8 +27,13 @@
                 </div>
                 <div id='conditionals'><p>IF...THEN</p></div>
                 <div id='music'><p> MAKE MUSIC!</p>
-                    <button id="clear" onclick="initclear()"> <img src="src/clearboard.gif" alt="this clears the board" width=80/> </button>
-                    <button id="random" onclick="init(random=true)"> <img src="src/.blockpng" alt="randomizes the board"  width=80/> </button>
+
+                    <button id="random" onclick="init('random')"> Randomize! </button>
+                    <button id="random" onclick="play_direction('forward')"> <img src="src/forward.gif" alt="this moves the board forward" width=80/> </button>
+                    <button id="random" onclick="play_direction('backward')"> <img src="src/reverse.gif" alt="this reverses the board" width=80/> </button>
+                    <button id="random" onclick="init('clear')"> <img src="src/clearboard.gif" alt="this clears the board" width=80/> </button>
+                    <!-- <button id="random" onclick="rotation('clockwise')"> Rotate Clockwise</button> -->
+                    <!-- <button id="random" onclick="rotation('anticlockwise')"> Rotate Anticlockwise </button> -->
                 </div>
             </div>
             </div>
