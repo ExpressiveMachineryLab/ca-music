@@ -16,8 +16,12 @@ let save_send_num;
 let nSteps;
 let init_shape_x, init_shape_y;
 let play_dir=0;
-let notes={0:'C3',1:'C#3',2:'D3',3:'D#3',4:'E3',5:'F3',6:'F#3',7:'G3',8:'G#3',9:'A3',10:'A#3'
+let notes = {0:'C3',1:'C#3',2:'D3',3:'D#3',4:'E3',5:'F3',6:'F#3',7:'G3',8:'G#3',9:'A3',10:'A#3'
 ,11:'B3',12:'C4',13:'C#4',14:'D4',15:'D#4',16:'E4',17:'F4',18:'F#4',19:'G4'}
+
+let major = {0:'C3',1:'D3',3:'E3',4:'F3',5:'G3',8:'A3',9:'B3',10:'C4',11:'D4',12:'E4',13:'F4',14:'G4',15:'A4',16:'B4',17:'C5',18:'D5',19:'E5'}
+
+let pentatonic = { 0:'C3',1:'D3',2:'E3',3:'G3',4:'A3',5:'C4',6:'D4',7:'E4',8:'G4',9:'A4',10:'C5',11:'D5',12:'E5',13:'G5',14:'A5',15:'C6',16:'D6',17:'E6',18:'G6',19:'A6'}
 
 //var faces;
 //var shapes;
@@ -80,7 +84,6 @@ function draw() {
 
   let num_ones = 0;
   if (play_dir == 'forward'){
-   
    forward();
   }
   else if (play_dir == 'backward'){
@@ -94,7 +97,7 @@ function draw() {
         fill(255,0,0);
         ellipse((step * w)+w/2, (j * w)+w/2, w, w);
         console.log(j);
-        t0.triggerAttackRelease(notes[j], '4n');
+        t0.triggerAttackRelease(pentatonic[j], '4n');
       }
       else {
         // let highlight = (step)% nSteps;
@@ -150,7 +153,7 @@ function draw() {
         fill(255,0,0);
         ellipse((step * w)+w/2, (j * w)+w/2, w, w);
         console.log(j);
-        t0.triggerAttackRelease(notes[j], '4n');
+        t0.triggerAttackRelease(pentatonic[j], '4n');
       }
       else {
         let highlight_color = color(169, 169, 169);
@@ -198,8 +201,8 @@ function draw() {
   }
 
   if (paused===false && board_sent==true) {
-    console.log('Generating!')
     generate();
+    console.log(board);
   }
   
   if (board_sent) { 
@@ -270,6 +273,9 @@ function init(key) {
       }
       else if(key === "clear"){
         board[i][j] = 0;
+      }
+      else {
+        board[i][j]=0;
       }
     }
   }
