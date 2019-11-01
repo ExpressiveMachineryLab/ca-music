@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 336.0, 79.0, 1020.0, 635.0 ],
+		"rect" : [ 395.0, 79.0, 1020.0, 635.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -38,6 +38,100 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-45",
+					"linecount" : 6,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 677.446802260016284, 357.454609634551446, 150.0, 87.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 5,
+					"presentation_rect" : [ 679.446802260016284, 357.213928571428426, 180.0, 74.0 ],
+					"text" : "distinguish drawable rows with sonic rows \n\nSOLUTION: make an editable row with no audio playback"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-43",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 691.0, 438.0, 150.0, 33.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 4,
+					"presentation_rect" : [ 679.446802260016284, 483.454609634551446, 72.0, 60.0 ],
+					"text" : "unclear to connect rules with hihat row"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-38",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 318.0, 625.0, 150.0, 33.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 318.0, 625.0, 150.0, 33.0 ],
+					"text" : "NO requirement to display rule number"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-34",
+					"linecount" : 5,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 691.0, 230.0, 150.0, 87.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 6,
+					"presentation_rect" : [ 688.0, 221.0, 97.0, 100.0 ],
+					"text" : "VISUALLY and SONICALLY CONFUSING WITH LOOP AND DRUMS:\n\n"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"bgcolor" : [ 0.996078431372549, 0.788235294117647, 0.0, 1.0 ],
+					"bubbleusescolors" : 1,
+					"fontsize" : 12.0,
+					"id" : "obj-31",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 177.459592009976859, 589.348214762551152, 151.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 101.459592009976859, 642.748214738709294, 136.106396874716324, 20.0 ],
+					"text" : "GENERATED RULE",
+					"textcolor" : [ 0.0, 0.007843137254902, 0.996078431372549, 1.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"bgcolor" : [ 0.996078431372549, 0.788235294117647, 0.0, 1.0 ],
+					"bubbleusescolors" : 1,
+					"fontsize" : 12.0,
+					"id" : "obj-1",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 168.670202692650037, 560.0, 151.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 141.459592009976859, 559.348214762551152, 136.106396874716324, 20.0 ],
+					"text" : "EDIT RULE HERE",
+					"textcolor" : [ 0.0, 0.007843137254902, 0.996078431372549, 1.0 ]
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"angle" : 270.0,
 					"bgcolor" : [ 0.227450980392157, 0.756862745098039, 0.811764705882353, 0.63 ],
@@ -339,7 +433,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1089.599999999999909, 218.759999999999962, 50.0, 22.0 ],
-					"text" : "3"
+					"text" : "8"
 				}
 
 			}
@@ -354,7 +448,7 @@
 					"parameter_enable" : 1,
 					"patching_rect" : [ 713.800000369548798, 102.5, 44.0, 15.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 0.0, 229.835714285714232, 49.399999403953643, 34.908928571428589 ],
+					"presentation_rect" : [ 1.0, 229.835714285714232, 49.399999403953643, 34.908928571428589 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_mmax" : 1,
@@ -615,7 +709,7 @@
 									"parameter_enable" : 0,
 									"patching_rect" : [ 50.0, 258.0, 18.0, 66.0 ],
 									"size" : 4,
-									"values" : [ 1, 1, 1, 0 ]
+									"values" : [ 1, 0, 0, 1 ]
 								}
 
 							}
@@ -894,6 +988,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-112",
+					"int" : 1,
 					"maxclass" : "gswitch",
 					"numinlets" : 3,
 					"numoutlets" : 1,
@@ -1026,7 +1121,7 @@
 					"numoutlets" : 4,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "signal", "signal", "", "" ],
-					"patching_rect" : [ 31.0, 674.199999988079071, 323.0, 54.0 ],
+					"patching_rect" : [ 31.0, 674.199999988079071, 555.0, 196.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_invisible" : 1,
@@ -1171,7 +1266,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 592.000000000000227, 76.857142880984668, 124.0, 29.0 ],
+					"patching_rect" : [ 592.000000000000227, 76.857142880984668, 126.0, 29.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 51.406395217707029, 471.0, 196.0, 18.0 ],
 					"text" : "^DRAW HIHAT PATTERN IN ROW 1 ^",
@@ -1545,7 +1640,7 @@
 					"patching_rect" : [ 785.587209080635262, 296.246428106512383, 27.973858931116698, 23.835714118821329 ],
 					"pic" : "nov30mojave:/Users/sandeepdasari/Desktop/CA/1d-CA/embryos-assets/TUrtleEgg2.png",
 					"presentation" : 1,
-					"presentation_rect" : [ 428.753197483683721, 496.448214726788535, 31.106395348837282, 26.504857575340644 ]
+					"presentation_rect" : [ 430.753197483683721, 496.448214726788535, 31.106395348837282, 26.504857575340644 ]
 				}
 
 			}
@@ -2023,7 +2118,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 499.533333333333417, 77.0, 65.0, 31.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 321.406395217707086, 581.248214738709294, 48.0, 31.0 ],
+					"presentation_rect" : [ 239.565988884693184, 637.248214738709294, 48.0, 31.0 ],
 					"tricolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 
@@ -2100,7 +2195,6 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-5",
-									"int" : 1,
 									"maxclass" : "gswitch",
 									"numinlets" : 3,
 									"numoutlets" : 1,
@@ -2201,7 +2295,6 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-16",
-									"int" : 1,
 									"maxclass" : "gswitch",
 									"numinlets" : 3,
 									"numoutlets" : 1,
@@ -2946,7 +3039,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 1266.0, 504.0, 151.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 288.670202692649923, 471.0, 100.106396874716324, 20.0 ],
+					"presentation_rect" : [ 288.670202692650037, 471.0, 100.106396874716324, 20.0 ],
 					"text" : "SELECT A RULE",
 					"textcolor" : [ 0.0, 0.007843137254902, 0.996078431372549, 1.0 ]
 				}
@@ -3142,8 +3235,8 @@
 						"basictuning" : 440,
 						"followglobaltempo" : 0,
 						"formantcorrection" : 0,
-						"loopend" : [ 4863.0, "ms" ],
-						"loopstart" : [ 4144.0, "ms" ],
+						"loopend" : [ 10666.0, "ms" ],
+						"loopstart" : [ 9966.0, "ms" ],
 						"mode" : "basic",
 						"originallength" : [ 632.049301354397812, "ticks" ],
 						"originaltempo" : 7.406827886161882,
@@ -4391,8 +4484,8 @@
 			"obj-59" : [ "VOLUME", "VOLUME", 0 ],
 			"obj-23" : [ "live.text[3]", "live.text", 0 ],
 			"obj-141" : [ "live.text[10]", "live.text[6]", 0 ],
-			"obj-97" : [ "live.toggle[3]", "live.toggle", 0 ],
 			"obj-142" : [ "live.text[11]", "live.text[6]", 0 ],
+			"obj-97" : [ "live.toggle[3]", "live.toggle", 0 ],
 			"obj-143" : [ "live.text[12]", "live.text[6]", 0 ],
 			"obj-104" : [ "live.toggle[6]", "live.toggle", 0 ],
 			"obj-16" : [ "live.grid[3]", "live.grid", 0 ],
@@ -4410,8 +4503,8 @@
 			"obj-76" : [ "live.text[13]", "live.text[6]", 0 ],
 			"obj-90" : [ "live.toggle[2]", "live.toggle", 0 ],
 			"obj-96" : [ "live.text[5]", "live.text", 0 ],
-			"obj-7" : [ "live.text[2]", "live.text", 0 ],
 			"obj-3" : [ "live.text", "live.text", 0 ],
+			"obj-7" : [ "live.text[2]", "live.text", 0 ],
 			"obj-83" : [ "live.text[4]", "live.text[4]", 0 ],
 			"parameterbanks" : 			{
 
@@ -4421,15 +4514,15 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "sand.jpg",
-				"bootpath" : "~/Desktop/CA/1d-CA",
-				"patcherrelativepath" : ".",
+				"bootpath" : "/Volumes/sand.jpg/",
+				"patcherrelativepath" : "../../../../../Volumes/sand.jpg",
 				"type" : "JPEG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "ca.js",
-				"bootpath" : "~/Desktop/CA/1d-CA",
-				"patcherrelativepath" : ".",
+				"bootpath" : "/Volumes/ca.js/",
+				"patcherrelativepath" : "../../../../../Volumes/ca.js",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
@@ -4442,50 +4535,50 @@
 			}
 , 			{
 				"name" : "TurtleEgg6.png",
-				"bootpath" : "~/Desktop/CA/1d-CA/embryos-assets",
-				"patcherrelativepath" : "./embryos-assets",
+				"bootpath" : "/Volumes/TurtleEgg6.png/",
+				"patcherrelativepath" : "../../../../../Volumes/TurtleEgg6.png",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "TurtleEgg6Square.png",
-				"bootpath" : "~/Desktop/CA/1d-CA/embryos-assets",
-				"patcherrelativepath" : "./embryos-assets",
+				"bootpath" : "/Volumes/TurtleEgg6Square.png/",
+				"patcherrelativepath" : "../../../../../Volumes/TurtleEgg6Square.png",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "TurtleEggSquare0.png",
-				"bootpath" : "~/Desktop/CA/1d-CA/embryos-assets",
-				"patcherrelativepath" : "./embryos-assets",
+				"bootpath" : "/Volumes/TurtleEggSquare0.png/",
+				"patcherrelativepath" : "../../../../../Volumes/TurtleEggSquare0.png",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "TUrtleEgg2.png",
-				"bootpath" : "~/Desktop/CA/1d-CA/embryos-assets",
-				"patcherrelativepath" : "./embryos-assets",
+				"bootpath" : "/Volumes/TUrtleEgg2.png/",
+				"patcherrelativepath" : "../../../../../Volumes/TUrtleEgg2.png",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "TurtleEgg5Square.png",
-				"bootpath" : "~/Desktop/CA/1d-CA/embryos-assets",
-				"patcherrelativepath" : "./embryos-assets",
+				"bootpath" : "/Volumes/TurtleEgg5Square.png/",
+				"patcherrelativepath" : "../../../../../Volumes/TurtleEgg5Square.png",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "TurtleEggSquare.png",
-				"bootpath" : "~/Desktop/CA/1d-CA/embryos-assets",
-				"patcherrelativepath" : "./embryos-assets",
+				"bootpath" : "/Volumes/TurtleEggSquare.png/",
+				"patcherrelativepath" : "../../../../../Volumes/TurtleEggSquare.png",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "SeaweedSquare.png",
-				"bootpath" : "~/Desktop/CA/1d-CA/embryos-assets",
-				"patcherrelativepath" : "./embryos-assets",
+				"bootpath" : "/Volumes/SeaweedSquare.png/",
+				"patcherrelativepath" : "../../../../../Volumes/SeaweedSquare.png",
 				"type" : "PNG",
 				"implicit" : 1
 			}
