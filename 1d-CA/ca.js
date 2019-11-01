@@ -16,24 +16,27 @@ for (var i = 0; i < cells.length; i++) {
 
 function rule(r) {
     var binaryStr = r.toString(2);
-	while(binaryStr.length < 8) {
+	while(binaryStr.length < 4) {
     	binaryStr = "0" + binaryStr;
 	}
 	ruleset = binaryStr.split("").map(function(x){return parseInt(x)});
+	post(ruleset + "\n" + "rules!");
 }
 
 
 // Implementing the Wolfram rules
 // Could be improved and made more concise, but here we can explicitly see what is going on for each case
-function rules(a, b, c) {
-  if (a == 1 && b == 1 && c == 1) { return ruleset[0]; }
-  else if (a == 1 && b == 1 && c == 0) { return ruleset[1] ; }
-  else if (a == 1 && b == 0 && c == 1) { return ruleset[2] ; }
-  else if (a == 1 && b == 0 && c == 0) { return ruleset[3] ; }
-  else if (a == 0 && b == 1 && c == 1) { return ruleset[4] ; }
-  else if (a == 0 && b == 1 && c == 0) { return ruleset[5] ;}
-  else if (a == 0 && b == 0 && c == 1) { return ruleset[6] ;}
-  else if (a == 0 && b == 0 && c == 0) { return ruleset[7] ;}
+function rules(a, b) {
+  if (a == 1 && b == 1) { return ruleset[0]; }
+  else if (a == 1 && b == 0) { return ruleset[1] ; }
+  else if (a == 0 && b == 1) { return ruleset[2] ; }
+  else if (a == 0 && b == 0) { return ruleset[3] ; }
+  /*
+  else if (a == 0 && b == 1) { return ruleset[4] ; }
+  else if (a == 0 && b == 1) { return ruleset[5] ;}
+  else if (a == 0 && b == 0) { return ruleset[6] ;}
+  else if (a == 0 && b == 0) { return ruleset[7] ;}
+	*/
   else post("what is happening!");
 }
 
@@ -57,7 +60,7 @@ function generate() {
 	if (i==0) var left   = cells[cells.length -1]; else var left = cells[i-1]   		// Left neighbor state
     var me     = cells[i];     															// Current state
     if (i==cells.length -1) var right  = cells[0]; else var right = cells[i+1]   		// Right neighbor state
-    nextgen[i] = rules(left, me, right); 												// Compute next generation state based on ruleset
+    nextgen[i] = rules(left, right); 												// Compute next generation state based on ruleset
 
   }
   // The current generation is the new generation
@@ -80,7 +83,10 @@ function sendrows(memory) {
 			if (i+1  == 6)
 				outlet(1, j+1, 1,memory[i][j]);
 			else
-				outlet(0,j+1,i+1,memory[i][j]);
+				{
+					outlet(0,j+1,i+1,memory[i][j]);
+				 	post(i,j,memory[i][j] + "\n");
+				}
 	}
 
 }
